@@ -1,0 +1,15 @@
+[submodule "firmware/stm32/platooning-control"]
+	path = firmware/stm32/platooning-control
+	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/platooning-uros-stm32.git
+[submodule "firmware/esp32/motor-control"]
+	path = firmware/esp32/motor-control
+	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/motor-control-esp32.git
+[submodule "firmware/esp32/imu"]
+	path = firmware/esp32/imu
+	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/imu-esp32.git
+[submodule "tools/python"]
+	path = tools/python
+	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/python-scripts.git
+[submodule "ros2_ws/src"]
+	path = ros2_ws/src
+	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/custom-ros-msgs.git
