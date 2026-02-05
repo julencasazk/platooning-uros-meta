@@ -7,8 +7,8 @@ echo "[bootstrap] Updating submodules..."
 git -C "$ROOT" submodule update --init --recursive
 
 # Canonical ROS 2 package directories (submodules directly under ros2_ws/src)
-PKG_VEH="$ROOT/ros2_ws/src/vehicle-state-msg"
-PKG_ETSI="$ROOT/ros2_ws/src/etsi-its-lite-msgs"
+PKG_VEH="$ROOT/ros2_ws/src/vehicle_state_msg"
+PKG_ETSI="$ROOT/ros2_ws/src/etsi_its_lite_msgs"
 
 for p in "$PKG_VEH" "$PKG_ETSI"; do
   if [[ ! -f "$p/package.xml" ]]; then
@@ -18,11 +18,11 @@ for p in "$PKG_VEH" "$PKG_ETSI"; do
 done
 
 declare -a EXTRA_DIRS=(
-  "$ROOT/firmware/stm32/platooning-control/micro_ros_stm32cubemx_utils/extra_packages"
-  "$ROOT/firmware/stm32/platooning-control/micro_ros_stm32cubemx_utils/microros_static_library/library_generation/extra_packages"
-  "$ROOT/firmware/stm32/platooning-control/micro_ros_stm32cubemx_utils/microros_static_library_ide/library_generation/extra_packages"
+  "$ROOT/firmware/stm32/platooning_control/micro_ros_stm32cubemx_utils/extra_packages"
+  "$ROOT/firmware/stm32/platooning_control/micro_ros_stm32cubemx_utils/microros_static_library/library_generation/extra_packages"
+  "$ROOT/firmware/stm32/platooning_control/micro_ros_stm32cubemx_utils/microros_static_library_ide/library_generation/extra_packages"
   "$ROOT/firmware/esp32/imu/micro_ros_espidf_component/extra_packages"
-  "$ROOT/firmware/esp32/motor-control/micro_ros_espidf_component/extra_packages"
+  "$ROOT/firmware/esp32/motor_control/micro_ros_espidf_component/extra_packages"
 )
 
 MODE="${1:-symlink}"  # ./bootstrap.sh [symlink|copy]
@@ -60,11 +60,11 @@ done
 
 echo "[bootstrap] Overwriting default micro-ROS files in stm32 control firmware"
 
-SRC="$ROOT/firmware/stm32/platooning-control/colcon.meta"
+SRC="$ROOT/firmware/stm32/platooning_control/colcon.meta"
 
 declare -a DESTS=(
-"$ROOT/firmware/stm32/platooning-control/micro_ros_stm32cubemx_utils/microros_static_library/library_generation/colcon.meta"
-"$ROOT/firmware/stm32/platooning-control/micro_ros_stm32cubemx_utils/microros_static_library_ide/library_generation/colcon.meta"
+"$ROOT/firmware/stm32/platooning_control/micro_ros_stm32cubemx_utils/microros_static_library/library_generation/colcon.meta"
+"$ROOT/firmware/stm32/platooning_control/micro_ros_stm32cubemx_utils/microros_static_library_ide/library_generation/colcon.meta"
 )
 
 for dst in "${DESTS[@]}"; do
