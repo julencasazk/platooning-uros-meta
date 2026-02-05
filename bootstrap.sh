@@ -55,6 +55,7 @@ for d in "${EXTRA_DIRS[@]}"; do
 done
 
 
+
 echo "[bootstrap] Overwriting default micro-ROS files in stm32 control firmware"
 
 SRC="$ROOT/firmware/stm32/platooning-control/colcon.meta"
@@ -65,8 +66,9 @@ declare -a DESTS=(
 )
 
 for dst in "${DESTS[@]}"; do
-	echo "[bootstrap] Overwriting: $dst"
-	< "$SRC" > "$dst"
+	echo "[bootstrap] Modifying Sub/Pub count: $dst"
+	sed -i -E 's/(-DRMW_UXRCE_MAX_PUBLISHERS=)[0-9]+/\112/' $dst
+	sed -i -E 's/(-DRMW_UXRCE_MAX_SUBSCRIPTIONS=)[0-9]+/\112/' $dst
 done
 
 echo "[bootstrap] Done."
