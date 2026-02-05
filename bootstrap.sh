@@ -22,7 +22,7 @@ declare -a EXTRA_DIRS=(
   "$ROOT/firmware/stm32/platooning_control/micro_ros_stm32cubemx_utils/microros_static_library/library_generation/extra_packages"
   "$ROOT/firmware/stm32/platooning_control/micro_ros_stm32cubemx_utils/microros_static_library_ide/library_generation/extra_packages"
   "$ROOT/firmware/esp32/imu/micro_ros_espidf_component/extra_packages"
-  "$ROOT/firmware/esp32/motor_control/micro_ros_espidf_component/extra_packages"
+  "$ROOT/firmware/esp32/motor_control/components/micro_ros_espidf_component/extra_packages"
 )
 
 MODE="${1:-symlink}"  # ./bootstrap.sh [symlink|copy]
