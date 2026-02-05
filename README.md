@@ -19,4 +19,7 @@ openocd -f /usr/share/openocd/scripts/board/stm32h7x3i_eval.cfg -c "program buil
 6. `make all`
 Now with the stm32 board connected through the STLink USB port.
 7. `openocd -f /usr/share/openocd/scripts/board/stm32h7x3i_eval.cfg -c "program build/platooning_uros_stm32h7.elf verify reset exit"`
-
+8. `cd ../../esp32/motor_control/`
+9. `. $IDF_PATH/export.sh`
+10. `idf.py build flash`
+// TODO Create conda environment, launchg micro-ROS agents and run.
