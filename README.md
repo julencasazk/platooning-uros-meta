@@ -4,22 +4,49 @@ This repo contains code from the master's thesis project of Julen Casal, develop
 
 ### Requirements
 
-### For flashing
+This project has been tested, and therefore is ready to work with the following requirememnts:
 
-```
-openocd -f /usr/share/openocd/scripts/board/stm32h7x3i_eval.cfg -c "program build/platooning_uros_stm32h7.elf verify reset exit"
-```
-### How to prepare
+- Ubuntu 22.04
+- ROS 2 Humble (with developer packages)
+- Python 3.10.2
+- ARM GNU Cross Toolchain (gcc-arm-none-eabi- >=11.0)
+- Docker version 29.2.0
+- [Micro-ROS Agent (humble branch) installed from `micro_ros_setup`](https://github.com/micro-ROS/micro_ros_setup)
+- ESP-IDF 5.2
 
-1. `source /opt/ros/humble/install/setup.sh`
-2. `cd ros2_ws && colcon build && source install/setup.sh`
-3. `cd ../firmware/stm32/platooning-control` 
-4. `sudo docker run -it --rm -v $(pwd):/project --env MICROROS_LIBRARY_FOLDER=micro_ros_stm32cubemx_utils/microros_static_library microros/micro_ros_static_library_builder:humble`
-5. Accept with `Y/y`
-6. `make all`
-Now with the stm32 board connected through the STLink USB port.
-7. `openocd -f /usr/share/openocd/scripts/board/stm32h7x3i_eval.cfg -c "program build/platooning_uros_stm32h7.elf verify reset exit"`
-8. `cd ../../esp32/motor_control/`
-9. `. $IDF_PATH/export.sh`
-10. `idf.py build flash`
-// TODO Create conda environment, launchg micro-ROS agents and run.
+### Usage
+
+First, ensure both ESP-IDF and the micro-ROS Agents' paths are correctly set up:
+```
+# Change this so it points to the correct workspaces
+export MICROROS_SETUP=~/microros_ws
+export IDF_PATH=~/esp/esp-idf 
+```
+
+Then, clone the whole meta repository with its submodules:
+```
+git clone --recurse-submodules git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/meta.git
+cd meta/
+```
+Now, make the `run.sh` helper script runnable with:
+```
+chmod +x run.sh
+```
+Now that everything is set up correctly, start the building and flashing process with the helper `run.sh` file. First run the `init` command to correctly set up the custom ROS 2 messages in the firmware directories.
+```
+./run.sh init
+```
+
+Then build the firmware projects with the `build` command:
+```
+./run.sh build # If failed, individual builds can be run with build-esp and build-stm
+```
+
+Finally, make sure the ESP32 and STM32 boards are connected. Both the micro-B Debugging and the UART Bridge can be connected at any port without issue. Also make sure the I2C pins from the ESP32 are correctly connected to the Jetbot expansion board. Run the flashing command to flash both boards:
+```
+./run.sh flash # Again, if failed, run individually with flash-esp and flash-stm
+```
+
+
+
+
