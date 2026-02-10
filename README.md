@@ -1,6 +1,6 @@
 ## Platooning simualtion in HIL using CARLA and micro-ROS
 
-This repo contains code from the master's thesis project of Julen Casal, developed 2025-2026.
+This repo contains code from the master's thesis project of Julen Casal, *Design and Implementation of a Hardware-In-the-Loop Architecture Based on Micro-ROS and CARLA*, developed 2025-2026.
 
 ### Requirements
 
@@ -11,8 +11,9 @@ This project has been tested, and therefore is ready to work with the following 
 - Python 3.10.2
 - ARM GNU Cross Toolchain (gcc-arm-none-eabi- >=11.0)
 - Docker version 29.2.0
-- [Micro-ROS Agent (humble branch) installed from `micro_ros_setup`](https://github.com/micro-ROS/micro_ros_setup)
+- Micro-ROS Agent (humble branch) installed from [`micro_ros_setup`](https://github.com/micro-ROS/micro_ros_setup)
 - ESP-IDF 5.2
+- OpenOCD Debugger 0.11.0
 
 ### Usage
 
@@ -25,7 +26,8 @@ export IDF_PATH=~/esp/esp-idf
 
 Then, clone the whole meta repository with its submodules:
 ```
-git clone --recurse-submodules git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/meta.git
+# Change the destination directory as pleased
+git clone --recursive https://github.com/julencasazk/platooning-uros-meta.git ~/meta
 cd meta/
 ```
 Now, make the `run.sh` helper script runnable with:
@@ -67,7 +69,7 @@ Finally, the required Python `venv` can be created and sourced automatically whi
 
 Leave `--host` empty if CARLA is running locally (localhost). Also, the STM32 firmware has the vehicle index hardcoded as `veh_3` so to change `--mcu-index` sucessfully the firmware should be altered beforehand.
 
-More information about how to run each script is displayed in a comment block at the start of the Python script.
+More information about how to run each script is displayed in a comment block at the start of the Python script.Also, the structure of the Python scripts directory is displayed in the corresponding repository's [README.md](https://github.com/julencasazk/carla_scripts?tab=readme-ov-file#project-structure).
 
 ### Important
 
@@ -78,7 +80,7 @@ cd ~/meta/ # Or wherever the project root dir is
 ./run.sh run tools/python/tools/plot_csv.py out.csv -p [global_sp_mps, speed_0, speed_1, speed_2, speed_3]
 ```
 
-If this is confusing, sourcing the Python `venv` manually and following the [python-scripts](https://gitlab.ikerlan.es/STS/archived/old-tfm/tfm-jcasal/python-scripts) instructions is also a viable option, instead of relying on `run.sh run`.
+If this is confusing, sourcing the Python `venv` manually and following the `python-scripts` [instructions](https://github.com/julencasazk/carla_scripts?tab=readme-ov-file#usage) is also a viable option, instead of relying on `run.sh run`.
 
 
 ### In case of failure
