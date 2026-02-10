@@ -356,14 +356,35 @@ flash_stm32() {
 
   [[ -d "$STM32_DIR" ]] || die "STM32 dir not found: $STM32_DIR"
   command -v openocd >/dev/null 2>&1 || die "openocd not found in PATH"
-  [[ -f "$ROOT/tools/openocd/stm32h7x_swd.cfg" ]] || die "OpenOCD cfg not found: $ROOT/tools/openocd/stm32h7x_swd.cfg"
   [[ -f "$STM32_DIR/build/platooning_uros_stm32h7.elf" ]] || die "ELF not found (build first): $STM32_DIR/build/platooning_uros_stm32h7.elf"
 
-  (
-    cd "$STM32_DIR"
-    openocd -f "$ROOT/tools/openocd/stm32h7x_swd.cfg" \
-      -c "program build/platooning_uros_stm32h7.elf verify reset exit"
+  local cfg
+  local flashed=0
+  local cfgs=(
+    "$ROOT/tools/openocd/stm32h7x_swd.cfg"
+    "$ROOT/tools/openocd/stm32h7x_hla_swd.cfg"
   )
+
+  for cfg in "${cfgs[@]}"; do
+    if [[ ! -f "$cfg" ]]; then
+      info "Skipping missing OpenOCD cfg: $cfg"
+      continue
+    fi
+
+    info "Trying STM32 flash with OpenOCD cfg: $(basename "$cfg")"
+    if (
+      cd "$STM32_DIR"
+      openocd -f "$cfg" \
+        -c "program build/platooning_uros_stm32h7.elf verify reset exit"
+    ); then
+      flashed=1
+      break
+    fi
+
+    info "Flash attempt failed with cfg: $(basename "$cfg")"
+  done
+
+  [[ "$flashed" -eq 1 ]] || die "STM32 flash failed with all OpenOCD configs."
 
   info "STM32 flash finished."
 }
