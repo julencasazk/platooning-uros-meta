@@ -103,7 +103,7 @@ ensure_venv() {
 
   local have_hash=""
   if [[ -f "$VENV_STAMP" ]]; then
-    have_hash="$(cat "$VENV_SaAMP" 2>/dev/null || true)"
+    have_hash="$(cat "$VENV_STAMP" 2>/dev/null || true)"
   fi
 
   if [[ "$want_upgrade_pip" == "1" ]]; then
@@ -128,8 +128,20 @@ activate_venv() {
 }
 
 resolve_microros_setup() {
+  if [[ -n "${MICROROS_WS:-}" ]]; then
+    local ws="${MICROROS_WS%/}"
+    local setup="$ws/install/local_setup.bash"
+    [[ -f "$setup" ]] || die "MICROROS_WS is set but setup file was not found: $setup"
+    echo "$setup"
+    return 0
+  fi
+
+  # Backward compatibility: if MICROROS_SETUP is set, treat it as workspace dir.
   if [[ -n "${MICROROS_SETUP:-}" ]]; then
-    echo "$MICROROS_SETUP"
+    local ws_legacy="${MICROROS_SETUP%/}"
+    local setup_legacy="$ws_legacy/install/local_setup.bash"
+    [[ -f "$setup_legacy" ]] || die "MICROROS_SETUP is set but setup file was not found: $setup_legacy"
+    echo "$setup_legacy"
     return 0
   fi
 
@@ -155,10 +167,11 @@ source_agent_env() {
   if microros_setup="$(resolve_microros_setup)"; then
     source_setup_safe "$microros_setup"
   else
-    info "No micro-ROS setup file found in default locations; trying existing PATH."
+    info "No micro-ROS workspace setup found in default locations; trying existing PATH."
   fi
 
-  command -v micro_ros_agent >/dev/null 2>&1 || die "micro_ros_agent not found. Set MICROROS_SETUP=/path/to/local_setup.bash or install/source micro-ROS first."
+  command -v ros2 >/dev/null 2>&1 || die "ros2 command not found after sourcing environment."
+  ros2 pkg prefix micro_ros_agent >/dev/null 2>&1 || die "ROS package 'micro_ros_agent' not found. Install/source micro-ROS first, or set MICROROS_WS to a workspace that provides it."
 }
 
 start_agent_bg() {
@@ -168,7 +181,7 @@ start_agent_bg() {
 
   (
     source_agent_env
-    exec micro_ros_agent serial --dev "$dev" -b 460800
+    exec ros2 run micro_ros_agent micro_ros_agent serial --dev "$dev" -b 460800
   ) >"$log_file" 2>&1 &
 
   local pid="$!"
