@@ -16,3 +16,6 @@
 [submodule "ros2_ws/src/platooning_msgs"]
 	path = ros2_ws/src/platooning_msgs
 	url = https://github.com/julencasazk/platooning_msgs.git
+[submodule "ros2_ws/src/vehicle_state_msg"]
+	path = ros2_ws/src/vehicle_state_msg
+	url = https://github.com/julencasazk/platooning_msgs.git
