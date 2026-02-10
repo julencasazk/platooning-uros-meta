@@ -69,6 +69,18 @@ Leave `--host` empty if CARLA is running locally (localhost). Also, the STM32 fi
 
 More information about how to run each script is displayed in a comment block at the start of the Python script.
 
+### Important
+
+When running python scripts that accept files, like `plot_csv.py`, remember that the script to run must be passed as relative to the meta project's root dir, BUT the file passed as argument is passed relative to the Python scripts dir. For example, to plot an output from `following_ros_cam.py`, a command like the following should be run from the meta project's root directory:
+
+```
+cd ~/meta/ # Or wherever the project root dir is
+./run.sh run tools/python/tools/plot_csv.py out.csv -p [global_sp_mps, speed_0, speed_1, speed_2, speed_3]
+```
+
+If this is confusing, sourcing the Python `venv` manually and following the [python-scripts](https://gitlab.ikerlan.es/STS/archived/old-tfm/tfm-jcasal/python-scripts) instructions is also a viable option, instead of relying on `run.sh run`.
+
+
 ### In case of failure
 
 If any command fails to correctly execute in the last section, and recloning and trying again does not work, please revert to cloning each repo manually and compile and flash separatelly. Please refer to Appendix A.8 from the thesis document for a detailed guide.
