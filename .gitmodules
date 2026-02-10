@@ -1,15 +1,18 @@
 [submodule "firmware/stm32/platooning_control"]
 	path = firmware/stm32/platooning_control
-	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/platooning-uros-stm32.git
+	url = https://github.com/julencasazk/platooning_uros_stm32h7.git
 [submodule "firmware/esp32/motor_control"]
 	path = firmware/esp32/motor_control
-	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/motor-control-esp32.git
+	url = https://github.com/julencasazk/motor-control-microros.git
 [submodule "firmware/esp32/imu"]
 	path = firmware/esp32/imu
-	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/imu-esp32.git
+	url = https://github.com/julencasazk/imu_microros.git
 [submodule "tools/python"]
 	path = tools/python
-	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/python-scripts.git
-[submodule "ros2_ws/src"]
-	path = ros2_ws/src
-	url = git@gitlab.ikerlan.es:STS/archived/old-tfm/tfm-jcasal/custom-ros-msgs.git
+	url = https://github.com/julencasazk/carla_scripts.git
+[submodule "ros2_ws/src/etsi_its_lite_msgs"]
+	path = ros2_ws/src/etsi_its_lite_msgs
+	url = https://github.com/julencasazk/etsi_its_lite_msgs.git
+[submodule "ros2_ws/src/platooning_msgs"]
+	path = ros2_ws/src/platooning_msgs
+	url = https://github.com/julencasazk/platooning_msgs.git
