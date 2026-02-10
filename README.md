@@ -47,6 +47,28 @@ Finally, make sure the ESP32 and STM32 boards are connected. Both the micro-B De
 ./run.sh flash # Again, if failed, run individually with flash-esp and flash-stm
 ```
 
+The micro-ROS Agents can be run and killed by the following commands:
+```
+./run.sh agents # Run the agents
+./run.sh kill-agents # Kill the agents 
+```
 
+The Agents are by default run listening to `/dev/ttyUSB0` and `/dev/ttyUSB1` at a baudrate of `460800`, which is default for the project. For now, to change that, the `run.sh` script should be modified.
 
+The user should check if the Agents are running and what parameters are they run with executing something like:
+```
+ps aux | grep -i "[m]icroros\|[m]icro_ros"
+```
 
+Finally, the required Python `venv` can be created and sourced automatically while also launching a Python script with the `run` command. The following is an example with the latest script:
+```
+./run.sh run tools/python/core/following_ros_cam.py --host $CARLA_IP --plen 4 --mcu-index 3 -f out.csv
+```
+
+Leave `--host` empty if CARLA is running locally (localhost). Also, the STM32 firmware has the vehicle index hardcoded as `veh_3` so to change `--mcu-index` sucessfully the firmware should be altered beforehand.
+
+More information about how to run each script is displayed in a comment block at the start of the Python script.
+
+### In case of failure
+
+If any command fails to correctly execute in the last section, and recloning and trying again does not work, please revert to cloning each repo manually and compile and flash separatelly. Please refer to Appendix A.8 from the thesis document for a detailed guide.
